@@ -1,0 +1,2 @@
+$('#post-short-<%= @result[:object][:id] %>').hide()
+$('#post-full-<%= @result[:object][:id] %>').show().html("<%= escape_javascript(render 'post', enable_back: true) %>")

@@ -1,10 +1,13 @@
 <% @result[:objects].each do |post| %>
-  <div class="card post-card">
+  <div class="card post-card" id="post-short-<%= post[:id] %>">
+    <div class="card-header row">
+      <h5 class="col-sm-11"><%= post[:title] %></h5>
+      <%= link_to 'Open it', post_path(post[:id]), class: 'card-link text-right', remote: true %>
+    </div>
     <div class="card-body">
-      <h5 class="card-title"><%= post[:title] %></h5>
-      <h6 class="card-subtitle mb-2 text-muted"><%= post[:short_description] %></h6>
+      <h6 class="card-title"><%= post[:short_description] %></h6>
       <p class="card-text"><%= truncate(post[:content], length: 200) %></p>
-      <%= link_to 'Open it', post_path(post[:id]), class: 'card-link' %>
     </div>
   </div>
+  <div class="card post-card" id="post-full-<%= post[:id] %>" style="display: none"></div>
 <% end %>
