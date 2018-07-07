@@ -1,0 +1,4 @@
+$('#post-short-<%= @result.id %>').hide()
+$('#post-full-<%= @result.id %>').hide()
+$('#post-form-<%= @result.id %>').show()
+    .html("<%= escape_javascript(button_tag 'Cancel', onclick: "hidePostForm(#{@result.id})", class: 'btn btn-danger')%><%= escape_javascript(render 'form', action: 'update') %>")

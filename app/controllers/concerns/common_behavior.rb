@@ -22,7 +22,7 @@ module CommonBehavior
   end
 
   def new
-    @result = {object: Presenters::Base.new(presenter, resource_class.new).result}
+    @result = resource_class.new
   end
 
   def create
@@ -31,7 +31,7 @@ module CommonBehavior
   end
 
   def edit
-    @result = {object: Presenters::Base.new(presenter, authorized_resource).result}
+    @result = authorized_resource
   end
 
   def update

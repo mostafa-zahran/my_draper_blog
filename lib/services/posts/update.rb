@@ -16,6 +16,7 @@ module Services
           @success = false
           @errors = @updated_object.errors.full_messages
         end
+        self
       end
 
       def success?

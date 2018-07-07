@@ -1,7 +1,11 @@
 <h1 class="display-2"><%= @result[:object][:title] %></h1>
 <div class="row">
   <div class="col-sm-2"></div>
-  <%= button_tag 'Close', onclick: "backToShortVersion(#{@result[:object][:id]})", class: 'btn btn-primary col-sm-1' if enable_back%>
+  <%= button_tag 'Close', onclick: "backToShortVersion(#{@result[:object][:id]})", class: 'btn btn-primary col-sm-1' if enable_back %>
+  <div class="col-sm-1"></div>
+  <% if @result[:object][:creator_id] == current_user.id %>
+    <%= link_to 'Edit', edit_post_path(@result[:object][:id]), class: 'btn btn-primary col-sm-1', remote: enable_back %>
+  <% end %>
   <div class="col-sm-2"></div>
 </div>
 <h5><%= @result[:object][:short_description] %></h5>
