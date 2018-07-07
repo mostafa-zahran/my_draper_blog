@@ -1,4 +1,4 @@
-<%= form_for @result, url: {action: action} do |post_form| %>
+<%= form_for @result, url: {action: action}, remote: remote do |post_form| %>
   <div class="form-group">
     <%= post_form.label :title %><br />
     <%= post_form.text_field :title, class: 'form-control'%>

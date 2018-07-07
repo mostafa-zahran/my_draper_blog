@@ -37,6 +37,7 @@ module CommonBehavior
   def update
     obj = service_repository::Update.new(allowed_params, authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.updated_object).result, success: obj.success?, errors: obj.errors}
+    redirect_to post_path(@result[:object][:id]) unless request.xhr?
   end
 
   def destroy

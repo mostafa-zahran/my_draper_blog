@@ -1,0 +1,8 @@
+<div class="card-header row">
+  <h5 class="col-sm-11"><%= post[:title] %></h5>
+  <%= link_to 'Open it', post_path(post[:id]), class: 'card-link text-right', remote: true %>
+</div>
+<div class="card-body">
+  <h6 class="card-title"><%= post[:short_description] %></h6>
+  <p class="card-text"><%= truncate(post[:content], length: 200) %></p>
+</div>
