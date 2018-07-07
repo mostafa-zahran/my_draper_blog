@@ -1,55 +1,31 @@
 class PostsController < ApplicationController
+  include CommonBehavior
 
-  before_action :post, :ensure_post, only: %i[edit show update destroy]
-  before_action :post_params, only: %i[create update]
   skip_before_action :authenticate_user!, only: :index
-  after_action :respond
-
-  def index
-
-  end
-
-  def show
-
-  end
-
-  def new
-
-  end
-
-  def create
-
-  end
-
-  def edit
-
-  end
-
-  def update
-
-  end
-
-  def destroy
-
-  end
 
   private
 
-  def post_params
-    @post_params ||= params.require(:post).permit(:title, :short_description, :content)
+  def resource_class
+    Post
   end
 
-  def post
-    @post ||= Post.find_by_id(params[:id])
+  def presenter
+    Presenters::PostPresenter
   end
 
-  def ensure_post
-    redirect_to root_path unless post
+  def service_repository
+    Services::Posts
   end
 
-  def respond
-    respond_to do |format|
-      request.xhr? ? format.json {render json: {result: @result}} : format.html
-    end
+  def allowed_params
+    @allowed_params ||= params.require(:post).permit(:title, :short_description, :content)
+  end
+
+  def resource
+    @resource ||= resource_class.find_by_id(params[:id])
+  end
+
+  def ensure_resource
+    redirect_to root_path unless resource
   end
 end
