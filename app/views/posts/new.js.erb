@@ -1,0 +1,2 @@
+$('#post-form-new').show()
+    .html("<%= escape_javascript(button_tag 'Cancel', onclick: "hidePostForm('new')", class: 'btn btn-danger')%><%= escape_javascript(render 'form', {action: 'create', remote: true}) %>")

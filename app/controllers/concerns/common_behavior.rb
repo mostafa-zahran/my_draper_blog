@@ -28,6 +28,14 @@ module CommonBehavior
   def create
     obj = service_repository::Creat.new(allowed_params).call
     @result = {object: Presenters::Base.new(presenter, obj.created_object).result, success: obj.success?, errors: obj.errors}
+    if @result[:success]
+      flash[:notice] = 'Created Successfully'
+    else
+      @result[:errors].each_with_index { |error, index|
+        flash[index] = error
+      }
+    end
+    redirect_to @result[:success] ? post_path(@result[:object][:id]) : :back unless request.xhr?
   end
 
   def edit
@@ -42,7 +50,7 @@ module CommonBehavior
         errors: obj.errors
     }
     if @result[:success]
-      flash[:notice] = 'Created Successfully'
+      flash[:notice] = 'Updated Successfully'
     else
       @result[:errors].each_with_index { |error, index|
         flash[index] = error
