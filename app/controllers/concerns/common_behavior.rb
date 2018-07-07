@@ -28,13 +28,7 @@ module CommonBehavior
   def create
     obj = service_repository::Creat.new(allowed_params).call
     @result = {object: Presenters::Base.new(presenter, obj.created_object).result, success: obj.success?, errors: obj.errors}
-    if @result[:success]
-      flash[:notice] = 'Created Successfully'
-    else
-      @result[:errors].each_with_index { |error, index|
-        flash[index] = error
-      }
-    end
+    init_flash_messages('Created Successfully')
     redirect_to @result[:success] ? post_path(@result[:object][:id]) : :back unless request.xhr?
   end
 
@@ -49,26 +43,14 @@ module CommonBehavior
         success: obj.success?,
         errors: obj.errors
     }
-    if @result[:success]
-      flash[:notice] = 'Updated Successfully'
-    else
-      @result[:errors].each_with_index { |error, index|
-        flash[index] = error
-      }
-    end
+    init_flash_messages('Updated Successfully')
     redirect_to post_path(@result[:object][:id]) unless request.xhr?
   end
 
   def destroy
     obj = service_repository::Destroy.new(authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.destroyed_object).result, success: obj.success?, errors: obj.errors}
-    if @result[:success]
-      flash[:notice] = 'Destroyed Successfully'
-    else
-      @result[:errors].each_with_index { |error, index|
-        flash[index] = error
-      }
-    end
+    init_flash_messages('Destroyed Successfully')
     redirect_to @result[:success] ? posts_path : :back unless request.xhr?
   end
 
@@ -100,5 +82,15 @@ module CommonBehavior
 
   def ensure_resource
     redirect_to root_path if resource.blank? && authorized_resource.blank?
+  end
+
+  def init_flash_messages(message)
+    if @result[:success]
+      flash[:notice] = message
+    else
+      @result[:errors].each_with_index { |error, index|
+        flash[index] = error
+      }
+    end
   end
 end
