@@ -9,12 +9,13 @@ module Services
 
       def call
         begin
-          @destroyed_object = @destroyed_object.destroy!
+          @destroyed_object.destroy!
           @success = true
         rescue
           @success = false
           @errors = @destroyed_object.errors.full_messages
         end
+        self
       end
 
       def success?

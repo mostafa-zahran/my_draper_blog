@@ -1,0 +1,6 @@
+<% if @result[:success] %>
+$('#post-short-<%= @result[:object][:id]%>').remove()
+$('#post-full-<%= @result[:object][:id] %>').remove()
+$('#post-form-<%= @result[:object][:id] %>').remove()
+<% end %>
+$('#messages').html("<%= escape_javascript(render 'layouts/messages') %>")

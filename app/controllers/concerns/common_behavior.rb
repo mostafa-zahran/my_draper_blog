@@ -62,6 +62,14 @@ module CommonBehavior
   def destroy
     obj = service_repository::Destroy.new(authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.destroyed_object).result, success: obj.success?, errors: obj.errors}
+    if @result[:success]
+      flash[:notice] = 'Destroyed Successfully'
+    else
+      @result[:errors].each_with_index { |error, index|
+        flash[index] = error
+      }
+    end
+    redirect_to @result[:success] ? posts_path : :back unless request.xhr?
   end
 
   private

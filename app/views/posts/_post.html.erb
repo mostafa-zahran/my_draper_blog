@@ -5,6 +5,8 @@
   <div class="col-sm-1"></div>
   <% if @result[:object][:creator_id] == current_user.id %>
     <%= link_to 'Edit', edit_post_path(@result[:object][:id]), class: 'btn btn-primary col-sm-1', remote: enable_back %>
+    <div class="col-sm-1"></div>
+    <%= link_to 'Destroy', post_path(@result[:object][:id]), class: 'btn btn-danger col-sm-1', remote: enable_back, method: :delete %>
   <% end %>
   <div class="col-sm-2"></div>
 </div>
