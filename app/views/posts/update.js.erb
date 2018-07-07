@@ -1,3 +1,4 @@
 hidePostForm(<%=@result[:object][:id]%>)
 $('#post-full-<%= @result[:object][:id] %>').html("<%= escape_javascript(render 'post', enable_back: true) %>")
 $('#post-short-<%= @result[:object][:id] %>').html("<%= escape_javascript(render 'post_element', post: @result[:object]) %>")
+$('#messages').html("<%= escape_javascript(render 'layouts/messages') %>")

@@ -13,7 +13,9 @@
       <%= render 'layouts/navigation' %>
     </header>
     <main role="main">
-       <%= render 'layouts/messages' %>
+      <div id="messages">
+        <%= render 'layouts/messages' %>
+      </div>
        <%= yield %>
     </main>
   </body>

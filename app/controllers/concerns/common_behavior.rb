@@ -36,7 +36,18 @@ module CommonBehavior
 
   def update
     obj = service_repository::Update.new(allowed_params, authorized_resource).call
-    @result = {object: Presenters::Base.new(presenter, obj.updated_object).result, success: obj.success?, errors: obj.errors}
+    @result = {
+        object: Presenters::Base.new(presenter, obj.success? ? obj.updated_object : authorized_resource.reload).result,
+        success: obj.success?,
+        errors: obj.errors
+    }
+    if @result[:success]
+      flash[:notice] = 'Created Successfully'
+    else
+      @result[:errors].each_with_index { |error, index|
+        flash[index] = error
+      }
+    end
     redirect_to post_path(@result[:object][:id]) unless request.xhr?
   end
 
