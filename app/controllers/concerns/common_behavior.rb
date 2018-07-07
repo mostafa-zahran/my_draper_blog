@@ -2,14 +2,18 @@ module CommonBehavior
   extend ActiveSupport::Concern
 
   included do
-    before_action :resource, :ensure_resource, only: %i[edit show update destroy]
+    before_action :resource, :ensure_resource, only: :show
+    before_action :authorized_resource, only: %i[edit update destroy]
     before_action :allowed_params, only: %i[create update]
   end
 
 
   def index
+    objs = service_repository::List.new(params[:page].presence || 1).call
     @result = {
-        objects: Presenters::Base.new(presenter, service_repository::List.new.call).result
+        objects: Presenters::Base.new(presenter, objs.objects_list).result,
+        has_more: objs.more?,
+        current_page: objs.current_page
     }
   end
 
@@ -27,16 +31,16 @@ module CommonBehavior
   end
 
   def edit
-    @result = {object: Presenters::Base.new(presenter, resource).result}
+    @result = {object: Presenters::Base.new(presenter, authorized_resource).result}
   end
 
   def update
-    obj = service_repository::Update.new(allowed_params, resource).call
+    obj = service_repository::Update.new(allowed_params, authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.updated_object).result, success: obj.success?, errors: obj.errors}
   end
 
   def destroy
-    obj = service_repository::Destroy.new(resource).call
+    obj = service_repository::Destroy.new(authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.destroyed_object).result, success: obj.success?, errors: obj.errors}
   end
 
@@ -62,7 +66,11 @@ module CommonBehavior
     @resource ||= resource_class.find_by_id(params[:id])
   end
 
+  def authorized_resource
+    @authorized_resource ||= resource_class.where(creator_id: current_user.id).find_by_id(params[:id])
+  end
+
   def ensure_resource
-    redirect_to root_path unless resource
+    redirect_to root_path if resource.blank? && authorized_resource.blank?
   end
 end

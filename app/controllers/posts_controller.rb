@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   end
 
   def allowed_params
-    @allowed_params ||= params.require(:post).permit(:title, :short_description, :content)
+    @allowed_params ||= params.require(:post).permit(:title, :short_description, :content).merge({creator_id: current_user.id})
   end
 
   def resource

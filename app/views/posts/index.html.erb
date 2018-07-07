@@ -1,7 +1,8 @@
-<div class="jumbotron">
-  <h1 class="display-2">Welcome</h1>
-  <p class="lead">
-    This web application was created with
-    <%= link_to('Mostafa Zahran', 'https://github.com/mostafa-zahran') %>.
-  </p>
+<div class="container">
+  <div id="posts">
+    <%= render 'posts_list' %>
+  </div>
+  <div id="load-more-posts">
+    <%= render 'load_more'%>
+  </div>
 </div>
