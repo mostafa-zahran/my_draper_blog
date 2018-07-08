@@ -1,0 +1,20 @@
+<div class="modal fade" id="VerifyModal" tabindex="-1" role="dialog" aria-labelledby="VerifyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="VerifyModalLabel">Verify!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_tag url: {controller: :post_verifications, action: :update}, method: 'post' do |f| %>
+        <div class="modal-body">
+        <%= f.text_field_tag :verification_code, id: 'verification_code_input' %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit_tag 'Submit' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

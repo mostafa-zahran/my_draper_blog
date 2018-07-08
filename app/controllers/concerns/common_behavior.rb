@@ -9,7 +9,7 @@ module CommonBehavior
 
 
   def index
-    objs = service_repository::List.new(params[:page].presence || 1).call
+    objs = service_repository::List.new(params[:page].presence || 1, current_user&.id).call
     @result = {
         objects: Presenters::Base.new(presenter, objs.objects_list).result,
         has_more: objs.more?,
@@ -44,14 +44,14 @@ module CommonBehavior
         errors: obj.errors
     }
     init_flash_messages('Updated Successfully')
-    redirect_to post_path(@result[:object][:id]) unless request.xhr?
+    redirect_to resource_path(@result[:object][:id]) unless request.xhr?
   end
 
   def destroy
     obj = service_repository::Destroy.new(authorized_resource).call
     @result = {object: Presenters::Base.new(presenter, obj.destroyed_object).result, success: obj.success?, errors: obj.errors}
     init_flash_messages('Destroyed Successfully')
-    redirect_to @result[:success] ? posts_path : :back unless request.xhr?
+    redirect_to @result[:success] ? resources_path : :back unless request.xhr?
   end
 
   private
@@ -92,5 +92,13 @@ module CommonBehavior
         flash[index] = error
       }
     end
+  end
+
+  def resource_path(id)
+    raise 'resource_path Have to be implemented'
+  end
+
+  def resources_path
+    raise 'resources_path Have to be implemented'
   end
 end
