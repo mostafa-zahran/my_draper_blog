@@ -84,16 +84,6 @@ module CommonBehavior
     redirect_to root_path if resource.blank? && authorized_resource.blank?
   end
 
-  def init_flash_messages(message)
-    if @result[:success]
-      flash[:notice] = message
-    else
-      @result[:errors].each_with_index { |error, index|
-        flash[index] = error
-      }
-    end
-  end
-
   def resource_path(id)
     raise 'resource_path Have to be implemented'
   end

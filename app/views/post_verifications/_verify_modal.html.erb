@@ -7,14 +7,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= form_tag url: {controller: :post_verifications, action: :update}, method: 'post' do |f| %>
-        <div class="modal-body">
-        <%= f.text_field_tag :verification_code, id: 'verification_code_input' %>
-        </div>
-        <div class="modal-footer">
-          <%= f.submit_tag 'Submit' %>
-        </div>
-      <% end %>
+      <div class="modal-body">
+        <%= form_tag('/post_verifications/', {method: 'put', class: 'form-inline', id: 'verification_form'}) do %>
+          <%= text_field_tag 'verification_code', nil, id: 'verification_code_input', class: 'mb-3 mr-sm-3 form-control' %>
+          <%= submit_tag 'Submit', class: 'btn btn-primary mb-2' %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

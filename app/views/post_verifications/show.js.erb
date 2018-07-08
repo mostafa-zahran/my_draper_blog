@@ -1,3 +1,6 @@
 $('#VerifyModal').on('shown.bs.modal', function () {
-    $('#verification_code_input').trigger('focus')
-})
+    $('#verification_code_input').trigger('focus');
+    $('#verification_form').attr('action', '<%=post_verification_path(@result[:id]) %>')
+}).on('hidden.bs.modal', function () {
+    $('#verification_form').attr('action', '/post_verifications/')
+}).modal('show')

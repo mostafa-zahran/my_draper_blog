@@ -1,6 +1,10 @@
 hidePostForm('new')
 <% if @result[:success] %>
 $('#posts').prepend("<div class='card post-card' id='post-short-<%= @result[:object][:id] %>'></div>")
+    .prepend("<div class='card post-card' id='post-full-<%= @result[:object][:id] %>'></div>")
+    .prepend("<div class='card post-card' id='post-form-<%= @result[:object][:id] %>'></div>")
+$('#post-full-<%= @result[:object][:id] %>').hide()
+$('#post-form-<%= @result[:object][:id] %>').hide()
 $('#post-short-<%= @result[:object][:id] %>').html("<%= escape_javascript(render 'post_element', post: @result[:object]) %>")
 <% end %>
 $('#messages').html("<%= escape_javascript(render 'layouts/messages') %>")

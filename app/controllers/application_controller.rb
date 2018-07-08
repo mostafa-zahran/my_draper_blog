@@ -16,4 +16,14 @@ class ApplicationController < ActionController::Base
   def initiate_response
     @result = {}
   end
+
+  def init_flash_messages(message)
+    if @result[:success]
+      flash[:notice] = message
+    else
+      @result[:errors].each_with_index { |error, index|
+        flash[index] = error
+      }
+    end
+  end
 end
