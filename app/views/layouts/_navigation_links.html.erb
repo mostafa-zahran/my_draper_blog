@@ -1,8 +1,8 @@
 <%# add navigation links to this file %>
 <% if current_user.present? %>
-  <li class='nav-item'><%= link_to 'Profile', edit_user_registration_path, class: 'nav-link' %></li>
-  <li class='nav-item'><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
+  <li><%= link_to 'Profile', edit_user_registration_path, class: 'nav-link' %></li>
+  <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
 <% else %>
-  <li class='nav-item'><%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %></li>
-  <li class='nav-item'><%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %></li>
+  <li><%= link_to 'Sign in', new_user_session_path, class: 'nav-link' %></li>
+  <li><%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %></li>
 <% end %>

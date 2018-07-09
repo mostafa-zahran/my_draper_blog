@@ -1,12 +1,16 @@
-<%# navigation styled for Bootstrap 4.0 %>
 <div class="container">
-  <nav class="navbar navbar-toggleable-md navbar-dark bg-inverse">
-    <%= link_to "Mr Draper Blog", root_path, class: 'navbar-brand brand-name' %>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
-      &#9776;
-    </button>
-    <div class="collapse navbar-collapse" id="exCollapsingNavbar2">
-      <ul class="navbar-nav">
+  <nav class="navbar navbar-toggleable-md navbar-inverse">
+    <div class="navbar-header">
+      <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+        <span class="sr-only">&#9776;</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to "Mr Draper Blog", root_path, class: 'navbar-brand brand-name' %>
+    </div>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
         <%= render 'layouts/navigation_links' %>
       </ul>
     </div>
